@@ -22,9 +22,6 @@ export default function Chat() {
   const [messages, setMessages] = useState([]);
   const { username, id, setUsername, setId } = useContext(UserContext);
   const divUnderMessages = useRef();
-
-  axios.defaults.baseURL = import.meta.env.VITE_API_URL;
-
   useEffect(() => {
     connectToWs();
   }, []);
@@ -36,9 +33,7 @@ export default function Chat() {
   // }
 
   function connectToWs() {
-    const ws = new WebSocket(
-      import.meta.env.VITE_WS_URL || "ws://localhost:4000"
-    );
+    const ws = new WebSocket("ws://localhost:4000");
     setWs(ws);
     ws.addEventListener("message", handleMessage);
     ws.addEventListener("close", () => {

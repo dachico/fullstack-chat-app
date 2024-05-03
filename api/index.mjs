@@ -139,7 +139,7 @@ app.post("/register", async (req, res) => {
   }
 });
 
-const server = app.listen(4000);
+const server = app.listen(process.env.API_PORT);
 
 const wss = new WebSocketServer({ server });
 wss.on("connection", (connection, req) => {
