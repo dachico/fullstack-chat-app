@@ -32,8 +32,10 @@ export default function Chat() {
   //   return imageExtensions.includes(extension);
   // }
 
+  axios.defaults.baseURL = "https://fullstack-chat-app-ten.vercel.app";
+
   function connectToWs() {
-    const ws = new WebSocket("https://fullstack-chat-app-ten.vercel.app/");
+    const ws = new WebSocket("wss://fullstack-chat-app-ten.vercel.app/");
     setWs(ws);
     ws.addEventListener("message", handleMessage);
     ws.addEventListener("close", () => {
@@ -201,9 +203,7 @@ export default function Chat() {
                           $sender={message.sender === id}
                           target="_blank"
                           href={
-                            "https://fullstack-chat-app-ten.vercel.app/" +
-                            "/uploads/" +
-                            message.file
+                            axios.defaults.baseURL + "/uploads/" + message.file
                           }
                         >
                           <FontAwesomeIcon icon={faLink} />

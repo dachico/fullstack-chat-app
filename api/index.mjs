@@ -31,7 +31,7 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: "https://fullstack-chat-app-frontend.vercel.app/",
+    origin: "https://fullstack-chat-app-frontend.vercel.app",
   })
 );
 
