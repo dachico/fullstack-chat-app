@@ -7,13 +7,16 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.2",
+    "nodemon": "^3.1.0",
     "ws": "^8.17.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   },
   "name": "api",
   "version": "1.0.0",
   "main": "index.mjs",
   "type": "module",
-  "devDependencies": {},
   "scripts": {
     "dev": "nodemon index.mjs",
     "build": "npm i"
