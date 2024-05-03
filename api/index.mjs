@@ -35,22 +35,20 @@ app.use(cookieParser());
 //   })
 // );
 
-app.use(
-  cors({
-    credentials: true,
-    origin: function (origin, callback) {
-      const allowedOrigins = [
-        "https://fullstack-chat-app-frontend.vercel.app",
-        "https://fullstack-chat-app-frontend-a8v9uanv9-dachicos-projects.vercel.app",
-      ];
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-  })
-);
+cors({
+  credentials: true,
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      "https://fullstack-chat-app-frontend.vercel.app",
+      "https://fullstack-chat-app-frontend-a8v9uanv9-dachicos-projects.vercel.app",
+    ];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS policy does not allow access from this origin"));
+    }
+  },
+});
 
 async function getUserDataFromRequest(req) {
   return new Promise((resolve, reject) => {
