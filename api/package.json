@@ -8,5 +8,18 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.2",
     "ws": "^8.17.0"
-  }
+  },
+  "name": "api",
+  "version": "1.0.0",
+  "main": "index.mjs",
+  "type": "module",
+  "devDependencies": {},
+  "scripts": {
+    "dev": "nodemon index.mjs",
+    "build": "npm i"
+  },
+  "keywords": [],
+  "author": "Dachi Sapir",
+  "license": "ISC",
+  "description": ""
 }
