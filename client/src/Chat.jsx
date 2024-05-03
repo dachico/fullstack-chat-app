@@ -33,7 +33,7 @@ export default function Chat() {
   // }
 
   function connectToWs() {
-    const ws = new WebSocket("ws://localhost:4000");
+    const ws = new WebSocket("https://fullstack-chat-app-ten.vercel.app/");
     setWs(ws);
     ws.addEventListener("message", handleMessage);
     ws.addEventListener("close", () => {
@@ -201,7 +201,9 @@ export default function Chat() {
                           $sender={message.sender === id}
                           target="_blank"
                           href={
-                            axios.defaults.baseURL + "/uploads/" + message.file
+                            "https://fullstack-chat-app-ten.vercel.app/" +
+                            "/uploads/" +
+                            message.file
                           }
                         >
                           <FontAwesomeIcon icon={faLink} />
