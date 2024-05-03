@@ -35,20 +35,17 @@ app.use(cookieParser());
 //   })
 // );
 
-cors({
-  credentials: true,
-  origin: function (origin, callback) {
-    const allowedOrigins = [
+app.use(
+  cors({
+    origin: [
       "https://fullstack-chat-app-frontend.vercel.app",
       "https://fullstack-chat-app-frontend-a8v9uanv9-dachicos-projects.vercel.app",
-    ];
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("CORS policy does not allow access from this origin"));
-    }
-  },
-});
+    ],
+    credentials: true,
+    optionsSuccessStatus: 200,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 
 async function getUserDataFromRequest(req) {
   return new Promise((resolve, reject) => {
@@ -124,11 +121,23 @@ app.post("/logout", (req, res) => {
   res
     .cookie("token", "", { sameSite: "none", secure: true })
     .json("logged out");
+  res.clearCookie("token", { path: "/" });
+  res.status(200).send({ message: "Logged out" });
 });
 
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
+  if (!username || !password) {
+    return res
+      .status(400)
+      .json({ message: "Username and password are required." });
+  }
   try {
+    const existingUser = await UserModel.findOne({ username });
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists." });
+    }
+
     const hashedPassword = bcrypt.hashSync(password, bcryptSalt);
     const createdUser = await UserModel.create({
       username: username,
