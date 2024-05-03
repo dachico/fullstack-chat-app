@@ -28,10 +28,27 @@ const app = express();
 app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(express.json());
 app.use(cookieParser());
+// app.use(
+//   cors({
+//     credentials: true,
+//     origin: "https://fullstack-chat-app-frontend.vercel.app",
+//   })
+// );
+
 app.use(
   cors({
     credentials: true,
-    origin: "https://fullstack-chat-app-frontend.vercel.app",
+    origin: function (origin, callback) {
+      const allowedOrigins = [
+        "https://fullstack-chat-app-frontend.vercel.app",
+        "https://fullstack-chat-app-frontend-a8v9uanv9-dachicos-projects.vercel.app",
+      ];
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
   })
 );
 
@@ -139,7 +156,7 @@ app.post("/register", async (req, res) => {
   }
 });
 
-const server = app.listen(process.env.API_PORT);
+const server = app.listen(process.env.API_PORT || 4000);
 
 const wss = new WebSocketServer({ server });
 wss.on("connection", (connection, req) => {
