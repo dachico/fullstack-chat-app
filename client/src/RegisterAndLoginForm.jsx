@@ -55,6 +55,7 @@ export default function RegisterAndLoginForm() {
           onChange={(ev) => setPassword(ev.target.value)}
           type="password"
           placeholder="password"
+          autoComplete="current-password"
         />
 
         <BtnsWrapper>

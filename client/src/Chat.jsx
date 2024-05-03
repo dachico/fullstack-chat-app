@@ -46,6 +46,31 @@ export default function Chat() {
     });
   }
 
+  function setupWebSocket() {
+    const ws = new WebSocket("wss://fullstack-chat-app-ten.vercel.app/");
+
+    ws.onclose = function () {
+      console.log("Disconnected, trying to reconnect...");
+      setTimeout(setupWebSocket, 5000); // Reconnect every 5 seconds
+    };
+
+    ws.onerror = function (err) {
+      console.error("WebSocket encountered an error:", err);
+      ws.close();
+    };
+
+    ws.onmessage = function (message) {
+      console.log("Received:", message.data);
+    };
+
+    setWs(ws);
+  }
+
+  useEffect(() => {
+    setupWebSocket();
+    return () => ws && ws.close();
+  }, []);
+
   function showOnlinePepole(peopleArray) {
     const people = {};
     peopleArray.forEach(({ userId, username }) => {
